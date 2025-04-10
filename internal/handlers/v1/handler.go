@@ -1,9 +1,9 @@
 package v1
 
 import (
-	"socialsecurity/internal/app/application"
-	"socialsecurity/internal/app/user"
-	"socialsecurity/internal/middleware"
+	"artyomkorchagin/web-shop/internal/app/application"
+	"artyomkorchagin/web-shop/internal/app/user"
+	"artyomkorchagin/web-shop/internal/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -41,7 +41,6 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		main.GET("/about", h.renderAbout)
 		main.GET("/sign-in-page", h.renderSignIn)
 		main.GET("/sign-up-page", h.renderSignUp)
-		main.GET("/application-form", h.renderApplicationForm)
 	}
 
 	auth := router.Group("/auth")
@@ -55,15 +54,9 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	{
 		apiv1.GET("/profile", h.renderProfile)
 		apiv1.PATCH("/update-profile", h.updateProfile)
-		apiv1.GET("/application-form", h.renderApplicationForm)
-		apiv1.POST("/application-apply", h.createApplication)
 		apiv1.GET("/users", h.renderUsers)
 		apiv1.GET("/menu", h.renderMenu)
 		apiv1.POST("/sign-out", h.signOut)
-		apiv1.GET("/applications", h.renderListOfApplications)
-		apiv1.GET("/applications-review", h.renderAllApps)
-		apiv1.GET("/applications/:id", h.getApplicationDetails)
-		apiv1.PATCH("/applications/:id/action", h.workApplication)
 	}
 
 	return router

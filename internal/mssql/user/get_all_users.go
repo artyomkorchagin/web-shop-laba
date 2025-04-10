@@ -1,12 +1,12 @@
 package mssqlUser
 
 import (
+	"artyomkorchagin/web-shop/internal/types"
 	"context"
 	"fmt"
-	"socialsecurity/internal/types"
 )
 
-func (r *mssqlUserRepository) GetAllUsers(ctx context.Context) ([]types.User, error) {
+func (r *UserRepository) GetAllUsers(ctx context.Context) ([]types.User, error) {
 	// Define the SQL query
 	query := `
         SELECT 

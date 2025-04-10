@@ -4,12 +4,12 @@ import (
 	"database/sql"
 )
 
-type mssqlUserRepository struct {
+type UserRepository struct {
 	db *sql.DB
 }
 
-func NewUserRepository(db *sql.DB) *mssqlUserRepository {
-	return &mssqlUserRepository{
+func NewUserRepository(db *sql.DB) *UserRepository {
+	return &UserRepository{
 		db: db,
 	}
 }

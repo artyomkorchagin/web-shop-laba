@@ -1,11 +1,11 @@
 package mssqlUser
 
 import (
+	"artyomkorchagin/web-shop/internal/types"
 	"context"
-	"socialsecurity/internal/types"
 )
 
-func (r *mssqlUserRepository) AddUser(ctx context.Context, user *types.User) error {
+func (r *UserRepository) AddUser(ctx context.Context, user *types.User) error {
 	query := `
         INSERT INTO [dbo].[Users] (
             [first_name],

@@ -1,4 +1,4 @@
-module socialsecurity
+module artyomkorchagin/web-shop
 
 go 1.22.2
 

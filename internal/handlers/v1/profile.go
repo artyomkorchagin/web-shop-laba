@@ -1,10 +1,10 @@
 package v1
 
 import (
+	"artyomkorchagin/web-shop/internal/types"
 	"errors"
 	"fmt"
 	"net/http"
-	"socialsecurity/internal/types"
 
 	"github.com/gin-gonic/gin"
 )

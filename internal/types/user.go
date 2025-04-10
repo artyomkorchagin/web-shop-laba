@@ -41,7 +41,7 @@ type CreateUserRequest struct {
 
 func NewUser(req CreateUserRequest) *User {
 
-	user := &User{
+	return &User{
 		FirstName:         req.FirstName,
 		SecondName:        req.SecondName,
 		MiddleName:        req.MiddleName,
@@ -59,5 +59,4 @@ func NewUser(req CreateUserRequest) *User {
 		Role:              req.Role,
 	}
 
-	return user
 }

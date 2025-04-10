@@ -1,8 +1,8 @@
 package user
 
 import (
+	"artyomkorchagin/web-shop/internal/types"
 	"context"
-	"socialsecurity/internal/types"
 )
 
 func (s *Service) GetAllUsers(ctx context.Context) ([]types.User, error) {

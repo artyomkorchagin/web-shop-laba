@@ -1,8 +1,8 @@
 package application
 
 import (
+	"artyomkorchagin/web-shop/internal/types"
 	"context"
-	"socialsecurity/internal/types"
 
 	"github.com/google/uuid"
 )

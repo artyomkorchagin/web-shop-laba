@@ -1,16 +1,16 @@
 package mssqlUser
 
 import (
+	utils "artyomkorchagin/web-shop/internal/mssql"
+	"artyomkorchagin/web-shop/internal/types"
 	"context"
 	"database/sql"
-	utils "socialsecurity/internal/mssql"
-	"socialsecurity/internal/types"
 
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
 )
 
-func (r *mssqlUserRepository) GetUser(ctx context.Context, email string) (*types.User, error) {
+func (r *UserRepository) GetUser(ctx context.Context, email string) (*types.User, error) {
 	// Query the database to fetch the user by email and hashed password
 	query := `
         SELECT 

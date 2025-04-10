@@ -1,9 +1,9 @@
 package user
 
 import (
+	"artyomkorchagin/web-shop/internal/types"
 	"context"
 	"errors"
-	"socialsecurity/internal/types"
 )
 
 func (s *Service) GetUserByEmail(ctx context.Context, email string) (*types.User, error) {

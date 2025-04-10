@@ -1,8 +1,8 @@
 package user
 
 import (
+	"artyomkorchagin/web-shop/internal/types"
 	"context"
-	"socialsecurity/internal/types"
 )
 
 func (s *Service) AddUser(ctx context.Context, req types.CreateUserRequest) error {

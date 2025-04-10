@@ -1,13 +1,11 @@
 package main
 
 import (
+	"artyomkorchagin/web-shop/internal/app/user"
+	v1 "artyomkorchagin/web-shop/internal/handlers/v1"
+	mssqlUser "artyomkorchagin/web-shop/internal/mssql/user"
 	"database/sql"
 	"log"
-	"socialsecurity/internal/app/application"
-	"socialsecurity/internal/app/user"
-	v1 "socialsecurity/internal/handlers/v1"
-	mssqlApplication "socialsecurity/internal/mssql/application"
-	mssqlUser "socialsecurity/internal/mssql/user"
 
 	_ "github.com/microsoft/go-mssqldb"
 )
@@ -38,11 +36,7 @@ func main() {
 
 	userService := user.NewService(userRepo)
 
-	applicationRepo := mssqlApplication.NewApplicationRepository(db)
-
-	applicationService := application.NewService(applicationRepo)
-
-	svc := v1.NewAllSercivces(userService, applicationService)
+	svc := v1.NewAllSercivces(userService, nil)
 
 	handler := v1.NewHandler(svc)
 

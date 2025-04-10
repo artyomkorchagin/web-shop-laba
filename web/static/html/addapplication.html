@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отправить Заявку</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="application-container">
+        <h2>Отправить Заявку</h2>
+        <form action="/api/v1/application-apply" method="POST">
+            <!-- Benefit Selection -->
+            <div class="form-group">
+                <label for="benefit_id">Пособие:</label>
+                <select id="benefit_id" name="benefit_id">
+                    <option value="" disabled selected>-- Выберите пособие --</option>
+                    <!-- Dynamically generate benefit options -->
+                    {{ if .Benefits }}
+                        {{ range .Benefits }}
+                            <option value="{{ .BenefitID }}">{{ .Name }}</option>
+                        {{ end }}
+                    {{ else }}
+                        <option value="" disabled>Нет доступных пособий</option>
+                    {{ end }}
+                </select>
+            </div>
+
+            <!-- Service Selection -->
+            <div class="form-group">
+                <label for="service_id">Услуга:</label>
+                <select id="service_id" name="service_id">
+                    <option value="" disabled selected>-- Выберите услугу --</option>
+                    <!-- Dynamically generate service options -->
+                    {{ if .Services }}
+                        {{ range .Services }}
+                            <option value="{{ .ServiceID }}">{{ .Name }}</option>
+                        {{ end }}
+                    {{ else }}
+                        <option value="" disabled>Нет доступных услуг</option>
+                    {{ end }}
+                </select>
+            </div>
+
+            <!-- Additional Information -->
+            <div class="form-group">
+                <label for="description">Доп. информация:</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">Отправить</button>
+        </form>
+    </div>
+</body>
+</html>

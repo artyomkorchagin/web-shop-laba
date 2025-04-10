@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <script src="https://unpkg.com/htmx.org"></script>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>User Profile</h1>
+        <form hx-patch="/api/v1/update-profile">
+            <!-- First Name -->
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name" value="{{ .User.FirstName }}" required><br><br>
+
+            <!-- Second Name -->
+            <label for="second_name">Second Name:</label>
+            <input type="text" id="second_name" name="second_name" value="{{ .User.SecondName }}" required><br><br>
+
+            <!-- Middle Name (Optional) -->
+            <label for="middle_name">Middle Name:</label>
+            <input type="text" id="middle_name" name="middle_name" value="{{ .User.MiddleName }}"><br><br>
+
+            <!-- Address (Optional) -->
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" value="{{ .User.Address }}"><br><br>
+
+            <!-- Phone Number -->
+            <label for="phone_number">Phone Number:</label>
+            <input type="text" id="phone_number" name="phone_number" value="{{ .User.PhoneNumber }}" required><br><br>
+
+            <!-- Submit Button -->
+            <button type="submit">Update Profile</button>
+        </form>
+    </div>
+</body>
+</html>

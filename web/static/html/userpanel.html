@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Menu</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <script src="https://unpkg.com/htmx.org"></script>
+</head>
+<body>
+
+<!-- Dynamic Menu Based on Role -->
+<div class="panel">
+    <!-- Check the role and display the appropriate panel -->
+    {{ if eq .Role "default" }}
+        <h2>User Panel</h2>
+        <button onclick="window.location.href='/api/v1/application-form'">Apply Application</button>
+        <button onclick="window.location.href='/api/v1/applications'">View Applications</button>
+        <button onclick="window.location.href='/api/v1/profile'">Profile</button>
+        <button hx-post="/api/v1/sign-out" onclick="window.location.href='/'">Logout</button>
+    {{ else if eq .Role "admin" }}
+        <h2>Employee Panel</h2>
+        <button onclick="window.location.href='/api/v1/applications-review'">Review Applications</button>
+        <button onclick="window.location.href='/api/v1/users'">Users</button>
+        <button onclick="window.location.href='/api/v1/profile'">Profile</button>
+        <button hx-post="/api/v1/sign-out" onclick="window.location.href='/'">Logout</button>
+    {{ else }}
+        <p>Invalid Role</p>
+    {{ end }}
+</div>
+
+</body>
+</html>

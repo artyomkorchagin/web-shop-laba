@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои Заявки</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f9f9fb;
+        }
+
+        .applications-container {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+            color: #555555;
+        }
+
+        tr:hover {
+            background-color: #f9f9fb;
+        }
+    </style>
+</head>
+<body>
+    <div class="applications-container">
+        <h2>Мои Заявки</h2>
+        <table id="applicationsTable">
+            <thead>
+                <tr>
+                    <th>ID Заявки</th>
+                    <th>Пособие</th>
+                    <th>Услуга</th>
+                    <th>Статус</th>
+                    <th>Доп. Информация</th>
+                    <th>Причина отказа</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{ if .Applications }}
+                    {{ range .Applications }}
+                        <tr>
+                            <td>{{ .ID }}</td>
+                            <td>{{ .BenefitID }}</td>
+                            <td>{{ .ServiceID }}</td>
+                            <td>{{ .Status }}</td>
+                            <td>{{ .Description }}</td>
+                            <td>{{ .RejectionReason }}</td>
+                        </tr>
+                    {{ end }}
+                {{ else }}
+                    <tr>
+                        <td colspan="5" style="text-align: center;">Нет заявок</td>
+                    </tr>
+                {{ end }}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

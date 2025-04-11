@@ -21,7 +21,6 @@ func (h *Handler) updateProfile(c *gin.Context) {
 	}
 
 	newUserData.Email = email
-	fmt.Println(newUserData)
 	user := types.NewUser(newUserData)
 	if err := h.services.user.UpdateUser(c, user); err != nil {
 		fmt.Println(err)

@@ -1,0 +1,17 @@
+dbms: "pgsql"
+
+driver: "pgx"
+
+server:
+  host: "localhost"
+  port: 3000
+  
+database:
+  name: "db_name"
+  user: "postgres"
+  password: "pswrd"
+  sslmode: "disable"
+
+logger:
+  level: "info"
+  format: "json" 

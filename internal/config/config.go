@@ -10,6 +10,8 @@ import (
 )
 
 type Config struct {
+	DBMS     string         `yaml:"dbms"`
+	Driver   string         `yaml:"driver"`
 	Server   ServerConfig   `yaml:"server"`
 	Database DatabaseConfig `yaml:"database"`
 	Logger   LoggerConfig   `yaml:"logger"`
@@ -22,8 +24,6 @@ type ServerConfig struct {
 
 type DatabaseConfig struct {
 	Dbname          string        `yaml:"dbname"`
-	Host            string        `yaml:"host"`
-	Port            int           `yaml:"port"`
 	Name            string        `yaml:"name"`
 	User            string        `yaml:"user"`
 	Password        string        `yaml:"password"`
@@ -58,13 +58,16 @@ func Load(configPath string) (*Config, error) {
 }
 
 func (c *Config) GetDSN() string {
-	return fmt.Sprintf("%s:%s@/%s",
-		c.Database.User,
-		c.Database.Password,
-		c.Database.Dbname,
-	)
-}
 
-func (c *Config) GetServerAddress() string {
-	return fmt.Sprintf("%s:%d", c.Server.Host, c.Server.Port)
+	switch c.DBMS {
+	case "pgsql":
+		return fmt.Sprintf("host=%s port=%d dbname=%s user=%s password=%s sslmode=%s",
+			c.Server.Host, c.Server.Port, c.Database.Dbname, c.Database.User, c.Database.Password, c.Database.SSLMode)
+	case "mssql":
+		return fmt.Sprintf("server=%s;user id=%s;password=%s;database=%s;",
+			c.Server.Host, c.Database.User, c.Database.Password, c.Database.Dbname)
+	default:
+		return "wrong DBMS name in config"
+	}
+
 }

@@ -1,4 +1,4 @@
-package mssqlUser
+package pgsqlUser
 
 import (
 	"artyomkorchagin/web-shop/internal/types"
@@ -9,12 +9,17 @@ import (
 )
 
 func (r *UserRepository) GetUser(ctx context.Context, email string) (*types.User, error) {
-	// Query the database to fetch the user by email and hashed password
+	// Query the database to fetch the user by email
 	query := `
         SELECT 
-            *
-        FROM [dbo].[Users]
-        WHERE [email] = ?
+            user_id,
+            username,
+            date_of_birth,
+            email,
+            password_hash,
+            role
+        FROM users
+        WHERE email = $1
     `
 
 	// Execute the query
@@ -38,6 +43,7 @@ func (r *UserRepository) GetUser(ctx context.Context, email string) (*types.User
 		}
 		return nil, errors.Wrap(err, "failed to execute query")
 	}
+
 	// Return the user object
 	return &user, nil
 }

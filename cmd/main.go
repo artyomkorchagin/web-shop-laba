@@ -5,6 +5,7 @@ import (
 	"artyomkorchagin/web-shop/internal/config"
 	v1 "artyomkorchagin/web-shop/internal/handlers/v1"
 	mssqlUser "artyomkorchagin/web-shop/internal/mssql/user"
+	psqlUser "artyomkorchagin/web-shop/internal/postgresql/user"
 	"database/sql"
 	"flag"
 	"fmt"
@@ -16,7 +17,7 @@ import (
 
 func main() {
 
-	var configFlag = flag.String("dbms", "mssql", "name of DBMS (e.g pgsql, mssql etc.)")
+	var configFlag = flag.String("dbms", "psql", "name of DBMS (e.g psql, mssql etc.)")
 
 	flag.Parse()
 
@@ -40,19 +41,31 @@ func main() {
 
 	fmt.Println(db.Driver())
 
-	userRepo := mssqlUser.NewUserRepository(db)
-
-	userService := user.NewService(userRepo)
-
-	svc := v1.NewAllSercivces(userService, nil)
-
-	handler := v1.NewHandler(svc)
+	handler := initHandler(db)
 
 	r := handler.InitRoutes()
 
 	r.Run(":3000")
 }
 
-func initServices(db sql.DB) {
-
+func initHandler(db *sql.DB) *v1.Handler {
+	var userRepo user.ReadWriter
+	switch fmt.Sprintf("%v", db.Driver()) {
+	case "pgx":
+		{
+			userRepo = psqlUser.NewUserRepository(db)
+		}
+	case "mssql":
+		{
+			userRepo = mssqlUser.NewUserRepository(db)
+		}
+	default:
+		{
+			log.Fatal("unknown driver", fmt.Sprintf("%v", db.Driver()))
+			return &v1.Handler{}
+		}
+	}
+	userService := user.NewService(userRepo)
+	svc := v1.NewAllSercivces(userService, nil)
+	return v1.NewHandler(svc)
 }

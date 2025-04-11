@@ -1,2 +1,2 @@
 config/mssql.yaml
-config/pgsql.yaml
+config/psql.yaml

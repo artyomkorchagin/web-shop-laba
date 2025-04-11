@@ -1,4 +1,4 @@
-package mssqlUser
+package psqlUser
 
 import (
 	"artyomkorchagin/web-shop/internal/types"

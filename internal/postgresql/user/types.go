@@ -1,4 +1,4 @@
-package pgsqlUser
+package psqlUser
 
 import (
 	"database/sql"

@@ -1,4 +1,4 @@
-package pgsqlUser
+package psqlUser
 
 import (
 	"artyomkorchagin/web-shop/internal/types"

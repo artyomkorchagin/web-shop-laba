@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"time"
 
 	"gopkg.in/yaml.v3"
 )
@@ -23,14 +22,10 @@ type ServerConfig struct {
 }
 
 type DatabaseConfig struct {
-	Dbname          string        `yaml:"dbname"`
-	Name            string        `yaml:"name"`
-	User            string        `yaml:"user"`
-	Password        string        `yaml:"password"`
-	SSLMode         string        `yaml:"sslmode"`
-	MaxOpenConns    int           `yaml:"max_open_conns"`
-	MaxIdleConns    int           `yaml:"max_idle_conns"`
-	ConnMaxLifetime time.Duration `yaml:"conn_max_lifetime"`
+	Dbname   string `yaml:"name"`
+	User     string `yaml:"user"`
+	Password string `yaml:"password"`
+	SSLMode  string `yaml:"sslmode"`
 }
 
 type LoggerConfig struct {
@@ -60,7 +55,7 @@ func Load(configPath string) (*Config, error) {
 func (c *Config) GetDSN() string {
 
 	switch c.DBMS {
-	case "pgsql":
+	case "psql":
 		return fmt.Sprintf("host=%s port=%d dbname=%s user=%s password=%s sslmode=%s",
 			c.Server.Host, c.Server.Port, c.Database.Dbname, c.Database.User, c.Database.Password, c.Database.SSLMode)
 	case "mssql":

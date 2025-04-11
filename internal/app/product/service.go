@@ -1,4 +1,4 @@
-package application
+package product
 
 type Service struct {
 	repo ReadWriter

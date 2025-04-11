@@ -39,18 +39,16 @@ func main() {
 
 	defer db.Close()
 
-	fmt.Println(db.Driver())
-
-	handler := initHandler(db)
+	handler := initHandler(db, cfg.Driver)
 
 	r := handler.InitRoutes()
 
 	r.Run(":3000")
 }
 
-func initHandler(db *sql.DB) *v1.Handler {
+func initHandler(db *sql.DB, driver string) *v1.Handler {
 	var userRepo user.ReadWriter
-	switch fmt.Sprintf("%v", db.Driver()) {
+	switch driver {
 	case "pgx":
 		{
 			userRepo = psqlUser.NewUserRepository(db)

@@ -1,7 +1,7 @@
 package v1
 
 import (
-	"artyomkorchagin/web-shop/internal/app/application"
+	"artyomkorchagin/web-shop/internal/app/product"
 	"artyomkorchagin/web-shop/internal/app/user"
 	"artyomkorchagin/web-shop/internal/middleware"
 
@@ -9,18 +9,18 @@ import (
 )
 
 type AllServices struct {
-	user        *user.Service
-	application *application.Service
+	user    *user.Service
+	product *product.Service
 }
 
 type Handler struct {
 	services AllServices
 }
 
-func NewAllSercivces(u *user.Service, a *application.Service) AllServices {
+func NewAllSercivces(u *user.Service, p *product.Service) AllServices {
 	return AllServices{
-		user:        u,
-		application: a,
+		user:    u,
+		product: p,
 	}
 }
 

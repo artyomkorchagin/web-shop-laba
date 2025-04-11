@@ -1,9 +1,10 @@
 package v1
 
 import (
-	"artyomkorchagin/web-shop/internal/app/product"
-	"artyomkorchagin/web-shop/internal/app/user"
 	"artyomkorchagin/web-shop/internal/middleware"
+	"artyomkorchagin/web-shop/internal/services/cart"
+	"artyomkorchagin/web-shop/internal/services/product"
+	"artyomkorchagin/web-shop/internal/services/user"
 
 	"github.com/gin-gonic/gin"
 )
@@ -11,16 +12,22 @@ import (
 type AllServices struct {
 	user    *user.Service
 	product *product.Service
+	cart    *cart.Service
 }
 
 type Handler struct {
 	services AllServices
 }
 
-func NewAllSercivces(u *user.Service, p *product.Service) AllServices {
-	return AllServices{
-		user:    u,
-		product: p,
+func NewAllSercivces(setters ...AllServices) AllServices {
+	services := AllServices{
+		user:    nil,
+		product: nil,
+		cart:    nil,
+	}
+
+	for _, setter := range setters {
+		setter(&services)
 	}
 }
 

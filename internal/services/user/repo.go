@@ -13,6 +13,7 @@ type Reader interface {
 type Writer interface {
 	AddUser(ctx context.Context, a *types.User) error
 	UpdateUser(ctx context.Context, u *types.User) error
+	Login(ctx context.Context, email string) error
 }
 
 type ReadWriter interface {

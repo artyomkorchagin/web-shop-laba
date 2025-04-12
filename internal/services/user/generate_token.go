@@ -24,9 +24,13 @@ func (s *Service) GenerateToken(ctx context.Context, email, password string) (st
 		return "", errors.New("invalid password")
 	}
 
+	if err := s.repo.Login(ctx, email); err != nil {
+		return "", err
+	}
+
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
 		Subject:   user.Email,
-		Issuer:    "kursach-app",
+		Issuer:    "online-shop",
 		Audience:  user.Role,
 		ExpiresAt: time.Now().Add(tokenTTL).Unix(),
 		IssuedAt:  time.Now().Unix(),

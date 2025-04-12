@@ -7,6 +7,8 @@ type Product struct {
 	Price         int    `json:"price"`
 	StockQuantity int    `json:"stock_quantity"`
 	Category      int    `json:"category"`
+	ImageURL      string `json:"image_url"`
+	UpdatedAt     string `json:"updated_at"`
 	CreatedAt     string `json:"created_at"`
 }
 

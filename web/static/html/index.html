@@ -1,18 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Page</title>
-    <!-- Link to External CSS -->
-    <link rel="stylesheet" href="/static/css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Shop</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f9f9f9;
+    }
+
+    /* Header Styles */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background-color: #333;
+      color: #fff;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .header a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+    }
+    .header a:hover {
+      text-decoration: underline;
+    }
+
+    /* Product Container Styles */
+    .product-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin: 20px;
+    }
+    .product-card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      width: 200px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .product-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+    .product-card h3 {
+      margin: 10px 0;
+      font-size: 18px;
+    }
+    .product-card p {
+      margin: 5px 0;
+      color: #555;
+    }
+    .product-card .price {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .no-products {
+      text-align: center;
+      font-size: 18px;
+      color: #666;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to Our Website</h1>
-        <p>Please sign in to continue.</p>
-        <!-- Link to /sign-in route -->
-        <a href="/sign-in-page">Sign In</a>
-    </div>
+  <header class="header">
+    <h1>My Online Shop</h1>
+    {{ if eq .Role "admin" }}
+    <a href="/api/v1/products">Добавить товар</a>
+    {{ end }}
+    {{ if .LoggedIn }}
+    <a href="/api/v1/profile">Профиль</a>
+    {{ else }}
+    <a href="/sign-up-page">Войти</a>
+    {{ end }}
+  </header>
+
+  <main>
+    <h2 style="margin: 20px;">Product List</h2>
+
+    {{ if .Products }}
+      <div class="product-container">
+        {{ range .Products }}
+          <div class="product-card">
+            <img src="{{ .Image }}" alt="{{ .Name }}">
+            <h3>{{ .Name }}</h3>
+            <p class="price">${{ printf "%.2f" .Price }}</p>
+            <p>{{ .Description }}</p>
+          </div>
+        {{ end }}
+      </div>
+    {{ else }}
+      <div class="no-products">No products available.</div>
+    {{ end }}
+  </main>
 </body>
 </html>

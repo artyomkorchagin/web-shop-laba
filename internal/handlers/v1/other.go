@@ -22,7 +22,6 @@ func (h *Handler) renderMain(c *gin.Context) {
 	if !ok || email == "" {
 		email = ""
 	}
-	fmt.Println(email)
 
 	if email != "" {
 		c.Redirect(http.StatusSeeOther, "/api/v1/menu")
@@ -44,7 +43,6 @@ func (h *Handler) renderProfile(c *gin.Context) {
 		return
 	}
 
-	fmt.Println(email, role, user)
 	c.HTML(http.StatusOK, "profile.html", gin.H{
 		"LoggedIn": email != "",
 		"Role":     role,

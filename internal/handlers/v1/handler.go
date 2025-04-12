@@ -36,6 +36,8 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	router.Static("/static", "../web/static/")
 
+	router.Static("/uploads", "./uploads")
+
 	router.LoadHTMLGlob("../web/static/html/*")
 
 	main := router.Group("/")
@@ -60,6 +62,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		apiv1.GET("/users", h.renderUsers)
 		apiv1.GET("/menu", h.renderMenu)
 		apiv1.POST("/sign-out", h.signOut)
+		apiv1.POST("/add-product", h.addProduct)
 	}
 
 	return router

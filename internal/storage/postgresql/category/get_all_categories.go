@@ -1,4 +1,4 @@
-package psqlProduct
+package psqlCategory
 
 import (
 	"artyomkorchagin/web-shop/internal/types"
@@ -6,15 +6,12 @@ import (
 	"fmt"
 )
 
-func (r *Repository) GetAllProducts(ctx context.Context) ([]types.Product, error) {
+func (r *Repository) GetAllCategories(ctx context.Context) ([]types.Category, error) {
 	query := `
         SELECT 
-            product_id, 
-            name, 
-            description, 
-            price
-        FROM products
-        ORDER BY created_at DESC
+            name
+        FROM categories
+        ORDER BY name ASC
     `
 
 	rows, err := r.db.QueryContext(ctx, query)
@@ -23,24 +20,19 @@ func (r *Repository) GetAllProducts(ctx context.Context) ([]types.Product, error
 	}
 	defer rows.Close()
 
-	var products []types.Product
+	var categories []types.Category
 	for rows.Next() {
-		var p types.Product
-		err := rows.Scan(
-			&p.ID,
-			&p.Name,
-			&p.Description,
-			&p.Price,
-		)
+		var c types.Category
+		err := rows.Scan(&c.ID, &c.Name)
 		if err != nil {
 			return nil, fmt.Errorf("failed to scan row: %w", err)
 		}
-		products = append(products, p)
+		categories = append(categories, c)
 	}
 
 	if err := rows.Err(); err != nil {
 		return nil, fmt.Errorf("error during row iteration: %w", err)
 	}
 
-	return products, nil
+	return categories, nil
 }

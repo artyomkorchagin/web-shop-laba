@@ -1,4 +1,4 @@
-package cart
+package category
 
 type Service struct {
 	repo ReadWriter

@@ -1,4 +1,4 @@
-package cart
+package category
 
 import (
 	"artyomkorchagin/web-shop/internal/types"
@@ -10,7 +10,7 @@ type Reader interface {
 }
 
 type Writer interface {
-	AddCategory(ctx context.Context, name string) error
+	AddCategory(ctx context.Context, ccr *types.CreateCategoryRequest) error
 }
 
 type ReadWriter interface {

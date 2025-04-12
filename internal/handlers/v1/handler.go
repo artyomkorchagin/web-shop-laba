@@ -3,6 +3,7 @@ package v1
 import (
 	"artyomkorchagin/web-shop/internal/middleware"
 	"artyomkorchagin/web-shop/internal/services/cart"
+	"artyomkorchagin/web-shop/internal/services/category"
 	"artyomkorchagin/web-shop/internal/services/product"
 	"artyomkorchagin/web-shop/internal/services/user"
 
@@ -10,20 +11,22 @@ import (
 )
 
 type AllServices struct {
-	user    *user.Service
-	product *product.Service
-	cart    *cart.Service
+	user     *user.Service
+	product  *product.Service
+	cart     *cart.Service
+	category *category.Service
 }
 
 type Handler struct {
 	services *AllServices
 }
 
-func NewAllServices(u *user.Service, p *product.Service, c *cart.Service) *AllServices {
+func NewAllServices(u *user.Service, p *product.Service, c *cart.Service, category *category.Service) *AllServices {
 	return &AllServices{
-		user:    u,
-		product: p,
-		cart:    c,
+		user:     u,
+		product:  p,
+		cart:     c,
+		category: category,
 	}
 }
 
@@ -63,6 +66,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		apiv1.GET("/menu", h.renderMenu)
 		apiv1.POST("/sign-out", h.signOut)
 		apiv1.POST("/add-product", h.addProduct)
+		apiv1.POST("/add-category", h.addCategory)
 	}
 
 	return router

@@ -4,10 +4,12 @@ import (
 	"artyomkorchagin/web-shop/internal/config"
 	v1 "artyomkorchagin/web-shop/internal/handlers/v1"
 	"artyomkorchagin/web-shop/internal/services/cart"
+	"artyomkorchagin/web-shop/internal/services/category"
 	"artyomkorchagin/web-shop/internal/services/product"
 	"artyomkorchagin/web-shop/internal/services/user"
 	mssqlUser "artyomkorchagin/web-shop/internal/storage/mssql/user"
 	psqlCart "artyomkorchagin/web-shop/internal/storage/postgresql/cart"
+	psqlCategory "artyomkorchagin/web-shop/internal/storage/postgresql/category"
 	psqlProduct "artyomkorchagin/web-shop/internal/storage/postgresql/product"
 	psqlUser "artyomkorchagin/web-shop/internal/storage/postgresql/user"
 	"database/sql"
@@ -52,9 +54,10 @@ func main() {
 
 func initHandler(db *sql.DB, driver string) *v1.Handler {
 	var (
-		userRepo    user.ReadWriter
-		cartRepo    cart.ReadWriter
-		productRepo product.ReadWriter
+		userRepo     user.ReadWriter
+		cartRepo     cart.ReadWriter
+		productRepo  product.ReadWriter
+		categoryRepo category.ReadWriter
 	)
 	switch driver {
 	case "pgx":
@@ -62,12 +65,14 @@ func initHandler(db *sql.DB, driver string) *v1.Handler {
 			userRepo = psqlUser.NewRepository(db)
 			cartRepo = psqlCart.NewRepository(db)
 			productRepo = psqlProduct.NewRepository(db)
+			categoryRepo = psqlCategory.NewRepository(db)
 		}
 	case "mssql":
 		{
 			userRepo = mssqlUser.NewRepository(db)
 			cartRepo = nil
 			productRepo = nil
+			categoryRepo = nil
 		}
 	default:
 		{
@@ -78,6 +83,7 @@ func initHandler(db *sql.DB, driver string) *v1.Handler {
 	userService := user.NewService(userRepo)
 	cartService := cart.NewService(cartRepo)
 	productService := product.NewService(productRepo)
-	svc := v1.NewAllServices(userService, productService, cartService)
+	categoryService := category.NewService(categoryRepo)
+	svc := v1.NewAllServices(userService, productService, cartService, categoryService)
 	return v1.NewHandler(svc)
 }

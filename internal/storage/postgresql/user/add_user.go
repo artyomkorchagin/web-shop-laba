@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func (r *UserRepository) AddUser(ctx context.Context, user *types.User) error {
+func (r *Repository) AddUser(ctx context.Context, user *types.User) error {
 	query := `
         INSERT INTO users (
             username,

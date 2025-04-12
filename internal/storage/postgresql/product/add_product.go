@@ -5,6 +5,6 @@ import (
 	"context"
 )
 
-func AddProduct(ctx context.Context, req *types.CreateProductRequest) error {
+func (r *Repository) AddProduct(ctx context.Context, p *types.Product) error {
 	return nil
 }

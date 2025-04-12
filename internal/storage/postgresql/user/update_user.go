@@ -5,6 +5,6 @@ import (
 	"context"
 )
 
-func (r *UserRepository) UpdateUser(ctx context.Context, u *types.User) error {
+func (r *Repository) UpdateUser(ctx context.Context, u *types.User) error {
 	return nil
 }

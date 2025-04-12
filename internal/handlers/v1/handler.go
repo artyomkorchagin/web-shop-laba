@@ -16,22 +16,18 @@ type AllServices struct {
 }
 
 type Handler struct {
-	services AllServices
+	services *AllServices
 }
 
-func NewAllSercivces(setters ...AllServices) AllServices {
-	services := AllServices{
-		user:    nil,
-		product: nil,
-		cart:    nil,
-	}
-
-	for _, setter := range setters {
-		setter(&services)
+func NewAllServices(u *user.Service, p *product.Service, c *cart.Service) *AllServices {
+	return &AllServices{
+		user:    u,
+		product: p,
+		cart:    c,
 	}
 }
 
-func NewHandler(services AllServices) *Handler {
+func NewHandler(services *AllServices) *Handler {
 	return &Handler{services: services}
 }
 

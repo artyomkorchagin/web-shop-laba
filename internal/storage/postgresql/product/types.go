@@ -1,15 +1,13 @@
 package psqlProduct
 
-import (
-	"database/sql"
-)
+import "database/sql"
 
-type ProductRepository struct {
+type Repository struct {
 	db *sql.DB
 }
 
-func NewProductRepository(db *sql.DB) *ProductRepository {
-	return &ProductRepository{
+func NewRepository(db *sql.DB) *Repository {
+	return &Repository{
 		db: db,
 	}
 }

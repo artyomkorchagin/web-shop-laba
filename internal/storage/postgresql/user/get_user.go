@@ -8,7 +8,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-func (r *UserRepository) GetUser(ctx context.Context, email string) (*types.User, error) {
+func (r *Repository) GetUser(ctx context.Context, email string) (*types.User, error) {
 	// Query the database to fetch the user by email
 	query := `
         SELECT 

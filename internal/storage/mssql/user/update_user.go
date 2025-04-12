@@ -7,7 +7,7 @@ import (
 	"fmt"
 )
 
-func (r *UserRepository) UpdateUser(ctx context.Context, u *types.User) error {
+func (r *Repository) UpdateUser(ctx context.Context, u *types.User) error {
 	// Validate input
 	if u.Email == "" {
 		return errors.New("invalid user or user ID")

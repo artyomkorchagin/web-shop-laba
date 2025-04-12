@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func (r *UserRepository) GetAllUsers(ctx context.Context) ([]types.User, error) {
+func (r *Repository) GetAllUsers(ctx context.Context) ([]types.User, error) {
 	// Define the SQL query
 	query := `
         SELECT 

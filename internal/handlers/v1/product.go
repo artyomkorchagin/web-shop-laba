@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"path/filepath"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -45,7 +46,7 @@ func (h Handler) addProduct(c *gin.Context) {
 		return
 	}
 
-	imageURL := "/" + fileName
+	imageURL := strings.ReplaceAll(fileName[2:], "\\", "/")
 
 	productreq := &types.CreateProductRequest{
 		Name:          name,

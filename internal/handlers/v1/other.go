@@ -3,6 +3,7 @@ package v1
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -77,5 +78,28 @@ func (h *Handler) renderAddStuff(c *gin.Context) {
 	c.HTML(http.StatusOK, "addstuff.html", gin.H{
 		"Role":       role,
 		"Categories": categories,
+	})
+}
+
+func (h *Handler) renderProduct(c *gin.Context) {
+	role := c.Request.Context().Value("role").(string)
+	productID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		fmt.Println("something wrong with product id ", err)
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	product, err := h.services.product.GetProductById(c, productID)
+	if err != nil {
+		fmt.Println("something wrong with product", err)
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	c.HTML(http.StatusOK, "product-detail.html", gin.H{
+		"LoggedIn": role != "",
+		"Role":     role,
+		"Product":  product,
 	})
 }

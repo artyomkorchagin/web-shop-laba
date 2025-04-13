@@ -2,7 +2,6 @@ package v1
 
 import (
 	"artyomkorchagin/web-shop/internal/types"
-	"errors"
 	"fmt"
 	"net/http"
 
@@ -19,14 +18,14 @@ func (h *Handler) signUp(c *gin.Context) {
 
 	if err := c.ShouldBind(&input); err != nil {
 		fmt.Println(err)
-		c.AbortWithError(http.StatusBadRequest, errors.New("invalid input body"))
+		c.Redirect(http.StatusSeeOther, "/")
 		return
 	}
 
 	err := h.services.user.AddUser(c, input)
 	if err != nil {
 		fmt.Println(err)
-		c.AbortWithError(http.StatusInternalServerError, err)
+		c.Redirect(http.StatusSeeOther, "/")
 		return
 	}
 
@@ -37,13 +36,13 @@ func (h *Handler) signIn(c *gin.Context) {
 	var input signInInput
 
 	if err := c.ShouldBind(&input); err != nil {
-		c.AbortWithError(http.StatusBadRequest, err)
+		c.Redirect(http.StatusSeeOther, "/")
 		return
 	}
 	token, err := h.services.user.GenerateToken(c, input.Email, input.Password)
 	if err != nil {
 		fmt.Println(err)
-		c.AbortWithError(http.StatusInternalServerError, err)
+		c.Redirect(http.StatusSeeOther, "/")
 		return
 	}
 

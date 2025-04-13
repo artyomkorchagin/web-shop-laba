@@ -72,6 +72,12 @@
       font-size: 18px;
       color: #666;
     }
+    .total-sum {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: right;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -80,17 +86,18 @@
     <a href="/">Back to Shop</a>
   </header>
 
+  {{ $sum := 0 }}
   <div class="cart-container">
     {{ if .CartProducts }}
       <h2>Products in Cart ({{ len .CartProducts }})</h2>
       <div>
         {{ range .CartProducts }}
+          {{ Add $sum (Mul .Price .Quantity) }}
           <div class="cart-item">
             <img src="{{ .ImageURL }}" alt="{{ .Name }}">
             <div class="cart-item-details">
               <h3>{{ .Name }}</h3>
-              <p>{{ .Description }}</p>
-              <p class="cart-item-price">$ {{ printf "%.2f" .Price }}</p>
+              <p class="cart-item-price">$ {{ .Price }}</p>
             </div>
             <div class="cart-item-quantity">
               Quantity: {{ .Quantity }}
@@ -98,9 +105,16 @@
           </div>
         {{ end }}
       </div>
+    
+      <div class="total-sum">
+        Итого: {{ $sum }} руб
+      </div>
+      <div style="text-align: right; margin-top: 20px;">
+        <a href="/render-auth/order" class="order-button">Place Order</a>
+      </div>
     {{ else }}
       <div class="no-products">
-        Your cart is empty. <a href="/">Continue shopping</a>.
+      Ваша корзина пуста. <a href="/">Продолжить покупки</a>.
       </div>
     {{ end }}
   </div>

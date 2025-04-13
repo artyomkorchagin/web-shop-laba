@@ -5,6 +5,7 @@ import (
 	"artyomkorchagin/web-shop/internal/services/category"
 	"artyomkorchagin/web-shop/internal/services/product"
 	"artyomkorchagin/web-shop/internal/services/user"
+	"text/template"
 
 	"github.com/gin-gonic/gin"
 )
@@ -34,6 +35,11 @@ func NewHandler(services *AllServices) *Handler {
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
 
+	router.SetFuncMap(template.FuncMap{
+		"Mul": Mul,
+		"Add": Add,
+	})
+
 	router.Static("/static", "../web/static/")
 
 	router.Static("/uploads", "../uploads")
@@ -41,15 +47,17 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	router.LoadHTMLGlob("../web/static/html/*")
 
 	router.Use(middleware.PassUserData())
-	{
-		router.GET("/", h.renderMain)
-	}
 
 	main := router.Group("/")
 	{
+		main.GET("/", h.renderMain)
 		main.GET("/about", h.renderAbout)
 		main.GET("/sign-in-page", h.renderSignIn)
 		main.GET("/sign-up-page", h.renderSignUp)
+	}
+	products := router.Group("/products")
+	{
+		products.GET("/:id", h.renderProduct)
 	}
 
 	auth := router.Group("/auth")
@@ -64,6 +72,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		renderAuth.GET("/users", h.renderUsers)
 		renderAuth.GET("/add-stuff", h.renderAddStuff)
 		renderAuth.GET("/cart", h.renderCart)
+		renderAuth.GET("/order", h.renderOrder)
 	}
 	apiv1 := router.Group("/api/v1")
 	apiv1.Use(middleware.AuthMiddleware())

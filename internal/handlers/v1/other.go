@@ -16,17 +16,19 @@ func (h *Handler) renderSignUp(c *gin.Context) {
 }
 
 func (h *Handler) renderMain(c *gin.Context) {
-	emailValue := c.Request.Context().Value("email")
+	role := c.Request.Context().Value("role").(string)
 
-	email, ok := emailValue.(string)
-	if !ok || email == "" {
-		email = ""
+	products, err := h.services.product.GetAllProducts(c)
+	if err != nil {
+		fmt.Println(err)
+		c.AbortWithStatus(http.StatusInternalServerError)
 	}
 
-	if email != "" {
-		c.Redirect(http.StatusSeeOther, "/api/v1/menu")
-	}
-	c.HTML(http.StatusOK, "index.html", nil)
+	c.HTML(http.StatusOK, "index.html", gin.H{
+		"LoggedIn": role != "",
+		"Role":     role,
+		"Products": products,
+	})
 }
 
 func (h *Handler) renderAbout(c *gin.Context) {
@@ -50,15 +52,6 @@ func (h *Handler) renderProfile(c *gin.Context) {
 	})
 }
 
-func (h *Handler) renderMenu(c *gin.Context) {
-	email := c.Request.Context().Value("email").(string)
-	role := c.Request.Context().Value("role").(string)
-	c.HTML(http.StatusOK, "userpanel.html", gin.H{
-		"LoggedIn": email != "",
-		"Role":     role,
-	})
-}
-
 func (h *Handler) renderUsers(c *gin.Context) {
 
 	users, err := h.services.user.GetAllUsers(c)
@@ -69,5 +62,20 @@ func (h *Handler) renderUsers(c *gin.Context) {
 	}
 	c.HTML(http.StatusOK, "listofusers.html", gin.H{
 		"Users": users,
+	})
+}
+
+func (h *Handler) renderAddStuff(c *gin.Context) {
+	role := c.Request.Context().Value("role").(string)
+
+	categories, err := h.services.category.GetAllCategories(c)
+	if err != nil {
+		fmt.Print("error with categories", err)
+		c.AbortWithStatus(http.StatusInternalServerError)
+	}
+
+	c.HTML(http.StatusOK, "addstuff.html", gin.H{
+		"Role":       role,
+		"Categories": categories,
 	})
 }

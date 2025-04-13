@@ -3,7 +3,6 @@ package v1
 import (
 	"artyomkorchagin/web-shop/internal/types"
 	"net/http"
-	"os"
 	"path/filepath"
 	"strconv"
 
@@ -13,9 +12,21 @@ import (
 func (h Handler) addProduct(c *gin.Context) {
 	name := c.PostForm("name")
 	description := c.PostForm("description")
-	price, err := strconv.Atoi(c.PostForm("price"))
+
+	price, err := strconv.ParseFloat(c.PostForm("price"), 64)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Bad price format"})
+		return
+	}
+	quantity, err := strconv.Atoi(c.PostForm("quantity"))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Bad quantity format"})
+		return
+	}
+
+	category, err := strconv.Atoi(c.PostForm("category"))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Bad category format"})
 		return
 	}
 
@@ -25,11 +36,7 @@ func (h Handler) addProduct(c *gin.Context) {
 		return
 	}
 
-	uploadDir := "./uploads"
-	if err := os.MkdirAll(uploadDir, os.ModePerm); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create upload directory"})
-		return
-	}
+	uploadDir := "../uploads/products"
 
 	fileName := filepath.Join(uploadDir, file.Filename)
 
@@ -38,18 +45,21 @@ func (h Handler) addProduct(c *gin.Context) {
 		return
 	}
 
-	//imageURL := "/" + fileName
+	imageURL := "/" + fileName
 
-	product := &types.CreateProductRequest{
-		Name:        name,
-		Description: description,
-		Price:       price,
+	productreq := &types.CreateProductRequest{
+		Name:          name,
+		Description:   description,
+		Price:         price,
+		StockQuantity: quantity,
+		Category:      category,
+		ImageURL:      imageURL,
 	}
 
-	if err := h.services.product.AddProduct(c, product); err != nil {
+	if err := h.services.product.AddProduct(c, productreq); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to push product to db"})
 		return
 	}
 
-	c.Redirect(http.StatusSeeOther, "/admin")
+	c.Redirect(http.StatusSeeOther, "/render-auth/add-stuff")
 }

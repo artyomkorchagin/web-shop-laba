@@ -19,5 +19,5 @@ func (h *Handler) addCategory(c *gin.Context) {
 		return
 	}
 
-	c.Redirect(http.StatusSeeOther, "/admin")
+	c.Redirect(http.StatusSeeOther, "/render-auth/add-stuff")
 }

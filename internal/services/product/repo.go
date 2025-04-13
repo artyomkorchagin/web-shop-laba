@@ -6,10 +6,12 @@ import (
 )
 
 type Reader interface {
+	GetCartByUserEmail(ctx context.Context, email string) ([]types.Product, error)
 	GetAllProducts(ctx context.Context) ([]types.Product, error)
 }
 
 type Writer interface {
+	AddToCart(ctx context.Context, email string, productID uint) error
 	AddProduct(ctx context.Context, p *types.Product) error
 }
 

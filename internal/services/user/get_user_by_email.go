@@ -12,10 +12,5 @@ func (s *Service) GetUserByEmail(ctx context.Context, email string) (*types.User
 		return nil, errors.New("email can't be empty")
 	}
 
-	user, err := s.repo.GetUser(ctx, email)
-	if err != nil {
-		return nil, err
-	}
-
-	return user, nil
+	return s.repo.GetUser(ctx, email)
 }

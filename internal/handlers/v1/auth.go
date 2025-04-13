@@ -48,7 +48,7 @@ func (h *Handler) signIn(c *gin.Context) {
 	}
 
 	c.SetCookie("token", token, 3600, "/", "localhost", false, true)
-	c.Redirect(http.StatusSeeOther, "/api/v1/menu")
+	c.Redirect(http.StatusSeeOther, "/")
 }
 
 func (h *Handler) signOut(c *gin.Context) {

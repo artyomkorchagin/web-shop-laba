@@ -15,15 +15,13 @@ func (r *Repository) GetUser(ctx context.Context, email string) (*types.User, er
             user_id,
             username,
             date_of_birth,
-            email,
             password_hash,
             role
         FROM users
         WHERE email = $1
     `
-
-	// Execute the query
 	var user types.User
+	user.Email = email
 	row := r.db.QueryRowContext(ctx, query, email)
 
 	// Scan the result into the User struct
@@ -31,7 +29,6 @@ func (r *Repository) GetUser(ctx context.Context, email string) (*types.User, er
 		&user.UserID,
 		&user.Username,
 		&user.DateOfBirth,
-		&user.Email,
 		&user.PasswordHash,
 		&user.Role,
 	)

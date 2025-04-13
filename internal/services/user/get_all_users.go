@@ -7,10 +7,5 @@ import (
 
 func (s *Service) GetAllUsers(ctx context.Context) ([]types.User, error) {
 
-	users, err := s.repo.GetAllUsers(ctx)
-	if err != nil {
-		return nil, err
-	}
-
-	return users, nil
+	return s.repo.GetAllUsers(ctx)
 }

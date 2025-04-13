@@ -78,12 +78,17 @@
   <header class="header">
     <h1>My Online Shop</h1>
     {{ if eq .Role "admin" }}
-    <a href="/api/v1/products">Добавить товар</a>
+    <a href="/render-auth/add-stuff">Добавить товар</a>
+    <a href="/render-auth/profile">Профиль</a>
+    {{ end }}
+    {{ if eq .Role "customer" }}
+    <a href="/render-auth/cart">Корзина</a>
+    <a href="/render-auth/profile">Профиль</a>
     {{ end }}
     {{ if .LoggedIn }}
-    <a href="/api/v1/profile">Профиль</a>
+    <a href="/api/v1/sign-out">Выйти</a>
     {{ else }}
-    <a href="/sign-up-page">Войти</a>
+    <a href="/sign-in-page">Войти</a>
     {{ end }}
   </header>
 
@@ -94,9 +99,9 @@
       <div class="product-container">
         {{ range .Products }}
           <div class="product-card">
-            <img src="{{ .Image }}" alt="{{ .Name }}">
+            <img src="{{ .ImageURL }}" alt="{{ .Name }}">
             <h3>{{ .Name }}</h3>
-            <p class="price">${{ printf "%.2f" .Price }}</p>
+            <p class="price">${{ .Price }}</p>
             <p>{{ .Description }}</p>
           </div>
         {{ end }}

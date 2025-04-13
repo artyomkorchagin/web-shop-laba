@@ -12,7 +12,10 @@ func (r *Repository) GetAllProducts(ctx context.Context) ([]types.Product, error
             product_id, 
             name, 
             description, 
-            price
+            price,
+			category_id,
+			stock_quantity,
+			image_url
         FROM products
         ORDER BY created_at DESC
     `
@@ -31,6 +34,9 @@ func (r *Repository) GetAllProducts(ctx context.Context) ([]types.Product, error
 			&p.Name,
 			&p.Description,
 			&p.Price,
+			&p.Category,
+			&p.StockQuantity,
+			&p.ImageURL,
 		)
 		if err != nil {
 			return nil, fmt.Errorf("failed to scan row: %w", err)

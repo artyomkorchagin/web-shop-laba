@@ -8,7 +8,8 @@ import (
 
 func (r *Repository) GetAllCategories(ctx context.Context) ([]types.Category, error) {
 	query := `
-        SELECT 
+        SELECT
+			category_id, 
             name
         FROM categories
         ORDER BY name ASC

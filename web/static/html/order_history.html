@@ -13,6 +13,18 @@
           margin: 0;
           background-color: #f9f9f9;
         }
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://fighttime.ru/media/k2/items/cache/9510c1acea39329865d88b734c0a88b2_XL.jpg?v=1') no-repeat center;
+            background-size: cover;
+            filter: blur(8px);
+            z-index: -1;
+            opacity: 0.7;
+        }
     
         .header {
           display: flex;
@@ -133,67 +145,34 @@
     <main class="content">
         <h1 class="page-title">История заказов</h1>
         <div class="order-history-table">
-            <% if (orders.length === 0) { %>
-                <p>У вас пока нет заказов.</p>
-            <% } else { %>
-                <% orders.forEach(order => { %>
+            {{ if eq (len .Orders) 0 }}
+                <p class="empty-orders">У вас пока нет заказов.</p>
+            {{ else }}
+                {{ range .Orders }}
                     <div class="order-item">
                         <div class="order-header">
-                            <h3>Заказ №<%= order.id %> от <%= order.created_at.toISOString().split('T')[0] %></h3>
-                            <p>Статус: <%= order.status %></p>
-                        </div>
-                        <div class="order-details">
-                            <p>Адрес доставки: <%= order.shipping_address %></p>
-                            <p>Способ оплаты: <%= order.payment_method %></p>
-                            <p>Общая стоимость: <%= order.total_price.toFixed(2) %> руб.</p>
+                            <span class="order-number">Заказ №{{ .ID }}</span>
+                            <span class="order-date">Дата: {{ .CreatedAt.Format "2000-01-01" }}</span>
                         </div>
                         <div class="order-items">
-                            <h4>Товары:</h4>
-                            <% order.items.forEach(item => { %>
+                            {{ range .Items }}
                                 <div class="order-item-detail">
-                                    <img src="<%= item.image_url %>" alt="<%= item.name %>" class="order-item-image">
+                                    <img src="{{ .ImageURL }}" alt="{{ .Name }}" class="order-item-image">
                                     <div class="order-item-info">
-                                        <p><%= item.name %></p>
-                                        <p>Количество: <%= item.quantity %> шт.</p>
-                                        <p>Цена за единицу: <%= item.price_at_time.toFixed(2) %> руб.</p>
+                                        <span class="item-name">{{ .Name }}</span>
+                                        <span class="item-quantity">Количество: {{ .Quantity }} шт.</span>
+                                        <span class="item-price">Цена: {{ .PriceAtTime }} ₽</span>
                                     </div>
                                 </div>
-                            <% }); %>
+                            {{ end }}
+                        </div>
+                        <div class="order-footer">
+                            <span class="order-total">Общая стоимость: {{ .TotalPrice }} ₽</span>
                         </div>
                     </div>
-                <% }); %>
-            <% } %>
+                {{ end }}
+            {{ end }}
         </div>
     </main>
-
-    <!-- Чат-бот -->
-    <div class="chat-container minimized">
-        <div class="chat-header">
-            <span>Agro-bot</span>
-            <button class="chat-toggle-btn">−</button>
-        </div>
-        <div class="chat-body" id="chat">
-            <!-- Сообщения будут добавляться сюда -->
-        </div>
-        <div class="chat-footer">
-            <div class="chat-buttons" id="chatButtons"></div>
-            <div class="chat-input" id="chatInput">
-                <input type="text" id="inputField" placeholder="Введи данные...">
-                <button onclick="submitInput()">Отправить</button>
-                <button onclick="cancelAction()" class="cancel-btn">Отмена</button>
-            </div>
-        </div>
-    </div>
-    <button class="chat-open-btn"><i class="fas fa-comment"></i> Чат</button>
-
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/chat.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 800,
-            once: true
-        });
-    </script>
 </body>
 </html>

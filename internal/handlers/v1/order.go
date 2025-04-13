@@ -17,7 +17,7 @@ func (h *Handler) renderOrder(c *gin.Context) {
 	})
 }
 
-func (h *Handler) createOrder(c *gin.Context) {
+func (h *Handler) addOrder(c *gin.Context) {
 	//email := c.Request.Context().Value("email").(string)
 
 	//products, _ := h.services.product.GetCartByUserEmail(c, email)

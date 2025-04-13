@@ -81,6 +81,8 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		apiv1.GET("/sign-out", h.signOut)
 		apiv1.POST("/add-product", h.addProduct)
 		apiv1.POST("/add-category", h.addCategory)
+		apiv1.POST("/add-order", h.addOrder)
+		apiv1.POST("/add-to-cart", h.addToCart)
 	}
 
 	return router

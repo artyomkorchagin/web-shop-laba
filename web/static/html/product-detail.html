@@ -138,13 +138,9 @@
       <p>{{ .Product.Description }}</p>
       <p>{{ .Product.CategoryString }}</p>
       <p>Объявление создано {{ .Product.CreatedAt }}</p>
-      <label for="name">Название товара:</label>
+      <label for="name">Количество:</label>
       <input type="number" id="amount" name="amount" placeholder="Enter amount" required>
-      <button hx-post="/login"
-            hx-vals='{
-                "ProductID": {{ .Product.ID}}
-                "userPassword": "htmxrocks"
-        }'>
+      <button hx-post="/api/v1/add-to-cart" hx-vals='{"productID": "{{ .Product.ID }}", "amount":".amount"}'>
         Добавить в корзину
       </button>
     </div>

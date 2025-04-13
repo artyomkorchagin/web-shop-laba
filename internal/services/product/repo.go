@@ -12,7 +12,7 @@ type Reader interface {
 }
 
 type Writer interface {
-	AddToCart(ctx context.Context, email string, productID uint) error
+	AddToCart(ctx context.Context, email string, productID, amount int) error
 	AddProduct(ctx context.Context, p *types.Product) error
 }
 

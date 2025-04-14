@@ -12,6 +12,8 @@ type Reader interface {
 }
 
 type Writer interface {
+	IncreasePurchaseCount(ctx context.Context, product_id int) error
+	IncreaseViewCount(ctx context.Context, product_id int) error
 	AddToCart(ctx context.Context, email string, productID, amount int) error
 	AddProduct(ctx context.Context, p *types.Product) error
 }

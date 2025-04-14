@@ -25,5 +25,6 @@ func (r *Repository) GetProductById(ctx context.Context, id int) (types.Product,
 		Scan(&product.Name, &product.Price, &product.Description, &product.StockQuantity, &product.CategoryString, &product.CreatedAt, &product.ImageURL); err != nil {
 		return product, err
 	}
+	product.ID = id
 	return product, nil
 }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Моя корзина</title>
+  <title>Оформление заказа</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -30,7 +30,7 @@
     .header a:hover {
       text-decoration: underline;
     }
-    .cart-container {
+    .order-container {
       max-width: 800px;
       margin: 20px auto;
       padding: 20px;
@@ -39,21 +39,20 @@
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
     .cart-item {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    margin-bottom: 15px;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      margin-bottom: 15px;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
     }
-
-.cart-item img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 6px;
-  margin-right: 20px;
-}
+    .cart-item img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-right: 20px;
+    }
     .cart-item-details {
       flex-grow: 1;
     }
@@ -68,12 +67,7 @@
     .cart-item-quantity {
       font-weight: bold;
       color: #333;
-    }
-    .cart-item-quantity {
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 5px; 
-    
+      margin-bottom: 5px;
     }
     .no-products {
       text-align: center;
@@ -86,17 +80,49 @@
       text-align: right;
       margin-top: 20px;
     }
+    .shipping-address {
+      margin-top: 20px;
+    }
+    .shipping-address label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .shipping-address input[type="text"],
+    .shipping-address textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    .submit-order {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .submit-order:hover {
+      background-color: #0056b3;
+    }
   </style>
 </head>
 <body>
   <header class="header">
-    <h1>Моя корзина</h1>
+    <h1>Оформление заказа</h1>
     <a href="/">Вернуться</a>
   </header>
 
-  <div class="cart-container">
+  <div class="order-container">
     {{ if .CartProducts }}
-      <h2>Товаров в корзине: ({{ len .CartProducts }})</h2>
+      <h2>Товары в заказе: ({{ len .CartProducts }})</h2>
       <div>
         {{ range .CartProducts }}
           <div class="cart-item">
@@ -112,16 +138,20 @@
           </div>
         {{ end }}
       </div>
-    
+
       <div class="total-sum">
         Итого: {{ .Sum_cart }} руб
       </div>
-      <div style="text-align: right; margin-top: 20px;">
-        <a href="/render-auth/order" class="order-button">Оформить заказ</a>
-      </div>
+
+      <form action="/api/v1/place-order" method="POST" class="shipping-address">
+        <label for="address">Адрес доставки:</label>
+        <textarea id="address" name="address" rows="4" placeholder="Введите адрес доставки" required></textarea>
+
+        <button type="submit" class="submit-order">Подтвердить заказ</button>
+      </form>
     {{ else }}
       <div class="no-products">
-      Ваша корзина пуста. <a href="/">Продолжить покупки</a>.
+        Ваша корзина пуста. <a href="/">Продолжить покупки</a>.
       </div>
     {{ end }}
     <div id="cart-notification"></div>

@@ -11,6 +11,7 @@ type Product struct {
 	UpdatedAt      string  `json:"updated_at"`
 	CreatedAt      string  `json:"created_at"`
 	CategoryString string
+	Sum            int
 }
 
 type CreateProductRequest struct {

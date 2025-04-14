@@ -83,6 +83,7 @@ func (h *Handler) renderAddStuff(c *gin.Context) {
 
 func (h *Handler) renderProduct(c *gin.Context) {
 	role := c.Request.Context().Value("role").(string)
+	fmt.Println(c.Param("id"))
 	productID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		fmt.Println("something wrong with product id ", err)
@@ -95,6 +96,11 @@ func (h *Handler) renderProduct(c *gin.Context) {
 		fmt.Println("something wrong with product", err)
 		c.AbortWithStatus(http.StatusInternalServerError)
 		return
+	}
+
+	err = h.services.product.IncreaseViewCount(c, productID)
+	if err != nil {
+		fmt.Println("something wrong with view count", err)
 	}
 
 	c.HTML(http.StatusOK, "product-detail.html", gin.H{

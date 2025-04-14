@@ -5,7 +5,6 @@ import (
 	"artyomkorchagin/web-shop/internal/services/category"
 	"artyomkorchagin/web-shop/internal/services/product"
 	"artyomkorchagin/web-shop/internal/services/user"
-	"text/template"
 
 	"github.com/gin-gonic/gin"
 )
@@ -34,11 +33,6 @@ func NewHandler(services *AllServices) *Handler {
 
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
-
-	router.SetFuncMap(template.FuncMap{
-		"Mul": Mul,
-		"Add": Add,
-	})
 
 	router.Static("/static", "../web/static/")
 

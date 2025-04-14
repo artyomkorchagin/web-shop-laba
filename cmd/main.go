@@ -13,7 +13,6 @@ import (
 	psqlProduct "artyomkorchagin/web-shop/internal/storage/postgresql/product"
 	psqlUser "artyomkorchagin/web-shop/internal/storage/postgresql/user"
 	"database/sql"
-	"flag"
 	"fmt"
 	"log"
 
@@ -23,11 +22,7 @@ import (
 
 func main() {
 
-	var configFlag = flag.String("dbms", "psql", "name of DBMS (e.g psql, mssql etc.)")
-
-	flag.Parse()
-
-	cfg, err := config.Load(fmt.Sprintf("../config/%s.yaml", *configFlag))
+	cfg, err := config.Load("../config/psql.yaml")
 	if err != nil {
 		log.Fatal(err)
 	}

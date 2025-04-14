@@ -1,7 +1,6 @@
 package main
 
 import (
-	"artyomkorchagin/web-shop/internal/config"
 	v1 "artyomkorchagin/web-shop/internal/handlers/v1"
 	"artyomkorchagin/web-shop/internal/services/category"
 	"artyomkorchagin/web-shop/internal/services/order"
@@ -22,12 +21,7 @@ import (
 
 func main() {
 
-	cfg, err := config.Load("../config/psql.yaml")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	db, err := sql.Open(cfg.Driver, cfg.GetDSN())
+	db, err := sql.Open("pgx", "host=yamabiko.proxy.rlwy.net port=33619 dbname=railway user=postgres password=AUJMTvvTqAPcrZyVLkpoBaUhXGkWAPBI sslmode=disable")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -40,7 +34,7 @@ func main() {
 
 	defer db.Close()
 
-	handler := initHandler(db, cfg.Driver)
+	handler := initHandler(db, "pgx")
 
 	r := handler.InitRoutes()
 

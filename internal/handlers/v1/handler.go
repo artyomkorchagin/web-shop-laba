@@ -3,6 +3,7 @@ package v1
 import (
 	"artyomkorchagin/web-shop/internal/middleware"
 	"artyomkorchagin/web-shop/internal/services/category"
+	"artyomkorchagin/web-shop/internal/services/order"
 	"artyomkorchagin/web-shop/internal/services/product"
 	"artyomkorchagin/web-shop/internal/services/user"
 
@@ -13,17 +14,19 @@ type AllServices struct {
 	user     *user.Service
 	product  *product.Service
 	category *category.Service
+	order    *order.Service
 }
 
 type Handler struct {
 	services *AllServices
 }
 
-func NewAllServices(u *user.Service, p *product.Service, c *category.Service) *AllServices {
+func NewAllServices(u *user.Service, p *product.Service, c *category.Service, o *order.Service) *AllServices {
 	return &AllServices{
 		user:     u,
 		product:  p,
 		category: c,
+		order:    o,
 	}
 }
 

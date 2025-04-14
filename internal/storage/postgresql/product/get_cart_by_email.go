@@ -20,7 +20,7 @@ func (r *Repository) GetCartByUserEmail(ctx context.Context, email string) ([]ty
         JOIN carts c ON u.user_id = c.user_id
         JOIN cart_items ci ON c.cart_id = ci.cart_id
         JOIN products p ON ci.product_id = p.product_id
-        WHERE u.email = $1
+        WHERE u.email = $1 AND ci.quantity > 0
     `
 
 	rows, err := r.db.QueryContext(ctx, query, email)

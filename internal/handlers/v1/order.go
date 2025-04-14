@@ -18,8 +18,9 @@ func (h *Handler) renderOrder(c *gin.Context) {
 }
 
 func (h *Handler) addOrder(c *gin.Context) {
-	//email := c.Request.Context().Value("email").(string)
+	email := c.Request.Context().Value("email").(string)
+	address := c.PostForm("address")
 
-	//products, _ := h.services.product.GetCartByUserEmail(c, email)
+	h.services.order.AddOrder(c, email, address)
 
 }

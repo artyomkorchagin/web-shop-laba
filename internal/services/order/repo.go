@@ -1,7 +1,6 @@
 package order
 
 import (
-	"artyomkorchagin/web-shop/internal/types"
 	"context"
 )
 
@@ -9,7 +8,7 @@ type Reader interface {
 }
 
 type Writer interface {
-	CreateOrder(ctx context.Context, order *types.Order) error
+	AddOrder(ctx context.Context, email, address string) error
 }
 
 type ReadWriter interface {

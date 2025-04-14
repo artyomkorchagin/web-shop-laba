@@ -4,10 +4,12 @@ import (
 	"artyomkorchagin/web-shop/internal/config"
 	v1 "artyomkorchagin/web-shop/internal/handlers/v1"
 	"artyomkorchagin/web-shop/internal/services/category"
+	"artyomkorchagin/web-shop/internal/services/order"
 	"artyomkorchagin/web-shop/internal/services/product"
 	"artyomkorchagin/web-shop/internal/services/user"
 	mssqlUser "artyomkorchagin/web-shop/internal/storage/mssql/user"
 	psqlCategory "artyomkorchagin/web-shop/internal/storage/postgresql/category"
+	psqlOrder "artyomkorchagin/web-shop/internal/storage/postgresql/order"
 	psqlProduct "artyomkorchagin/web-shop/internal/storage/postgresql/product"
 	psqlUser "artyomkorchagin/web-shop/internal/storage/postgresql/user"
 	"database/sql"
@@ -55,6 +57,7 @@ func initHandler(db *sql.DB, driver string) *v1.Handler {
 		userRepo     user.ReadWriter
 		productRepo  product.ReadWriter
 		categoryRepo category.ReadWriter
+		orderRepo    order.ReadWriter
 	)
 	switch driver {
 	case "pgx":
@@ -62,6 +65,7 @@ func initHandler(db *sql.DB, driver string) *v1.Handler {
 			userRepo = psqlUser.NewRepository(db)
 			productRepo = psqlProduct.NewRepository(db)
 			categoryRepo = psqlCategory.NewRepository(db)
+			orderRepo = psqlOrder.NewRepository(db)
 		}
 	case "mssql":
 		{

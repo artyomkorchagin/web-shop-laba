@@ -83,7 +83,6 @@ func (h *Handler) renderAddStuff(c *gin.Context) {
 
 func (h *Handler) renderProduct(c *gin.Context) {
 	role := c.Request.Context().Value("role").(string)
-	fmt.Println(c.Param("id"))
 	productID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		fmt.Println("something wrong with product id ", err)

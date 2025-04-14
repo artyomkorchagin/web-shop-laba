@@ -1,5 +1,5 @@
 [phases.build]
-cmds = ['''GOOS=linux GOARCH=amd64 go build -o ./cmd/out ./cmd''']
+cmds = ['''GOOS=linux GOARCH=amd64 go build -o out ./cmd''']
 
 [start]
-cmd = './cmd/out'
+cmd = './out'

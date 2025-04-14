@@ -2,7 +2,7 @@
 pkgs = ["go"]
 
 [build]
-command = "go build -o bin/app ./cmd"
+command = "go build -o out ./cmd"
 
 [start]
-command = "./bin/app"
+command = "./out"

@@ -8,4 +8,4 @@ command = "go get"
 command = "go build -o out ./cmd/main.go"
 
 [start]
-command = "./out"
+command = "go run out"

@@ -1,2 +1,5 @@
+[build]
+command = "go build -o bin/app ."
+
 [start]
-cmd = './bin/linux_amd64/api'
+command = "./bin/app/cmd"

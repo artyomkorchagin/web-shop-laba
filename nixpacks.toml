@@ -1,8 +1,11 @@
 [nix]
 pkgs = ["go"]
 
+[install]
+command = "go get"
+
 [build]
-command = "go build -o out ./cmd"
+command = "go build -o out ./cmd/main.go"
 
 [start]
 command = "./out"

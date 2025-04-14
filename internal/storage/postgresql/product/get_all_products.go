@@ -17,6 +17,7 @@ func (r *Repository) GetAllProducts(ctx context.Context) ([]types.Product, error
 			stock_quantity,
 			image_url
         FROM products
+		WHERE stock_quantity > 0
         ORDER BY created_at DESC
     `
 

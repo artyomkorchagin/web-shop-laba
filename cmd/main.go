@@ -82,6 +82,7 @@ func initHandler(db *sql.DB, driver string) *v1.Handler {
 	userService := user.NewService(userRepo)
 	productService := product.NewService(productRepo)
 	categoryService := category.NewService(categoryRepo)
-	svc := v1.NewAllServices(userService, productService, categoryService)
+	orderService := order.NewService(orderRepo)
+	svc := v1.NewAllServices(userService, productService, categoryService, orderService)
 	return v1.NewHandler(svc)
 }

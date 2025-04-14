@@ -1,5 +1,8 @@
+[nix]
+pkgs = ["go"]
+
 [build]
-command = "go build -o bin/app ."
+command = "go build -o bin/app ./cmd"
 
 [start]
-command = "./bin/app/cmd"
+command = "./bin/app"

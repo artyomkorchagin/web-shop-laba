@@ -1,11 +1,5 @@
-[nix]
-pkgs = ["go"]
-
-[install]
-command = "go get"
-
-[build]
-command = "go build -o out ./cmd/main.go"
+[phases.build]
+cmds = ['''GOOS=linux GOARCH=amd64 go build -o ./bin/linux_amd64/api ./cmd''']
 
 [start]
-command = "go run out"
+cmd = './bin/linux_amd64/api'

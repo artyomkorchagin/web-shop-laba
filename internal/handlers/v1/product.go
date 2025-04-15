@@ -2,6 +2,7 @@ package v1
 
 import (
 	"artyomkorchagin/web-shop/internal/types"
+	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -43,7 +44,7 @@ func (h Handler) addProduct(c *gin.Context) {
 	thisdir := filepath.Dir(execdir)
 	uploadDir := filepath.Join(thisdir, "/uploads/products")
 
-	fileName := filepath.Join(uploadDir, (file.Filename + time.Now().String()))
+	fileName := filepath.Join(uploadDir, (fmt.Sprintf("%s", time.Now().Unix()))+file.Filename)
 
 	if err := c.SaveUploadedFile(file, fileName); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save uploaded file"})

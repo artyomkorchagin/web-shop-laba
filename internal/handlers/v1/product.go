@@ -40,8 +40,8 @@ func (h Handler) addProduct(c *gin.Context) {
 	}
 
 	uploadDir := "/uploads/products"
-
-	fileName := filepath.Join(uploadDir, fmt.Sprintf("%v_%s", time.Now().Unix(), file.Filename))
+	file.Filename = fmt.Sprintf("%v_%s", time.Now().Unix(), file.Filename)
+	fileName := filepath.Join(uploadDir, file.Filename)
 
 	if err := c.SaveUploadedFile(file, fileName); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save uploaded file"})

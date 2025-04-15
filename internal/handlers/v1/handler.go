@@ -38,13 +38,14 @@ func NewHandler(services *AllServices) *Handler {
 
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
-	thisdir, _ := os.Getwd()
+	exec, _ := os.Executable()
+	thisdir := path.Dir(exec)
 
 	router.Static("/static", path.Join(thisdir, "/web/static/"))
 
 	router.Static("/uploads", path.Join(thisdir, "/uploads"))
 
-	router.LoadHTMLGlob("/web/static/html/*.html")
+	router.LoadHTMLGlob(path.Join(thisdir, "/web/static/html/*.html"))
 
 	router.Use(middleware.PassUserData())
 

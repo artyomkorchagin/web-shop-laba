@@ -3,9 +3,6 @@ package config
 import (
 	"fmt"
 	"os"
-	"path/filepath"
-
-	"gopkg.in/yaml.v3"
 )
 
 type Config struct {
@@ -18,7 +15,7 @@ type Config struct {
 
 type ServerConfig struct {
 	Host string `yaml:"host"`
-	Port int    `yaml:"port"`
+	Port string `yaml:"port"`
 }
 
 type DatabaseConfig struct {
@@ -33,20 +30,12 @@ type LoggerConfig struct {
 	Format string `yaml:"format"`
 }
 
-func Load(configPath string) (*Config, error) {
-	config := &Config{}
-	dir, err := filepath.Abs(configPath)
-	if err != nil {
-		return nil, fmt.Errorf("failed to get absolute path: %v", err)
-	}
-	file, err := os.ReadFile(dir)
-	if err != nil {
-		return nil, fmt.Errorf("error reading config file: %w", err)
-	}
-
-	err = yaml.Unmarshal(file, config)
-	if err != nil {
-		return nil, fmt.Errorf("error parsing config file: %w", err)
+func Load() (*Config, error) {
+	config := &Config{
+		DBMS:     os.Getenv("DBMS"),
+		Driver:   os.Getenv("DRIVER"),
+		Server:   ServerConfig{Host: os.Getenv("HOST"), Port: os.Getenv("PORT")},
+		Database: DatabaseConfig{Dbname: os.Getenv("DB_NAME"), User: os.Getenv("DB_USER"), Password: os.Getenv("DB_PASSWORD"), SSLMode: os.Getenv("DB_SSLMODE")},
 	}
 
 	return config, nil

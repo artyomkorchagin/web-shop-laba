@@ -15,13 +15,20 @@ import (
 	"fmt"
 	"log"
 
+	"artyomkorchagin/web-shop/internal/config"
+
 	_ "github.com/jackc/pgx/v5/stdlib"
 	_ "github.com/microsoft/go-mssqldb"
 )
 
 func main() {
 
-	db, err := sql.Open("pgx", "host=yamabiko.proxy.rlwy.net port=33619 dbname=railway user=postgres password=AUJMTvvTqAPcrZyVLkpoBaUhXGkWAPBI sslmode=disable")
+	cfg, err := config.Load()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	db, err := sql.Open(cfg.Driver, cfg.GetDSN())
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -34,7 +41,7 @@ func main() {
 
 	defer db.Close()
 
-	handler := initHandler(db, "pgx")
+	handler := initHandler(db, cfg.Driver)
 
 	r := handler.InitRoutes()
 

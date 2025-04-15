@@ -2,11 +2,13 @@ package v1
 
 import (
 	"artyomkorchagin/web-shop/internal/types"
+	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -42,7 +44,7 @@ func (h Handler) addProduct(c *gin.Context) {
 	thisdir := filepath.Dir(exec)
 
 	uploadDir := "/uploads/products"
-	image := filepath.Join(uploadDir, file.Filename)
+	image := filepath.Join(uploadDir, fmt.Sprintf("%v_%s", time.Now().Unix(), file.Filename))
 	fileDst := filepath.Join(thisdir, image)
 
 	if err := c.SaveUploadedFile(file, fileDst); err != nil {

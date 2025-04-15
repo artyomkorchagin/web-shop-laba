@@ -3,8 +3,6 @@ package config
 import (
 	"fmt"
 	"os"
-
-	_ "github.com/joho/godotenv/autoload"
 )
 
 type Config struct {
@@ -47,7 +45,7 @@ func (c *Config) GetDSN() string {
 
 	switch c.DBMS {
 	case "psql":
-		return fmt.Sprintf("host=%s port=%d dbname=%s user=%s password=%s sslmode=%s",
+		return fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=%s",
 			c.Server.Host, c.Server.Port, c.Database.Dbname, c.Database.User, c.Database.Password, c.Database.SSLMode)
 	case "mssql":
 		return fmt.Sprintf("server=%s;user id=%s;password=%s;database=%s;",

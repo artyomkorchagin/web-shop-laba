@@ -7,6 +7,7 @@ import (
 	"artyomkorchagin/web-shop/internal/services/product"
 	"artyomkorchagin/web-shop/internal/services/user"
 	"os"
+	"path"
 
 	"github.com/gin-gonic/gin"
 )
@@ -41,11 +42,10 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	if err != nil {
 		panic(err)
 	}
-	panic(thisdir)
 
-	router.Static("/static", "../web/static/")
+	router.Static("/static", path.Join(thisdir, "/web/static/"))
 
-	router.Static("/uploads", "../uploads")
+	router.Static("/uploads", path.Join(thisdir, "/uploads"))
 
 	router.LoadHTMLGlob("/static/html/*")
 

@@ -37,7 +37,7 @@ func (h Handler) addProduct(c *gin.Context) {
 		return
 	}
 
-	uploadDir := "/uploads/products"
+	uploadDir := "\\uploads\\products"
 	fileName := filepath.Join(uploadDir, file.Filename)
 
 	if err := c.SaveUploadedFile(file, fileName); err != nil {

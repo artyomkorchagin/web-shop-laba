@@ -44,7 +44,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	router.Static("/uploads", path.Join(thisdir, "/uploads"))
 
-	router.LoadHTMLGlob("/web/static/html/")
+	router.LoadHTMLGlob("/web/static/html/*.html")
 
 	router.Use(middleware.PassUserData())
 

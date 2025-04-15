@@ -38,7 +38,7 @@ func main() {
 
 	r := handler.InitRoutes()
 
-	r.Run(":3000")
+	r.Run(":80")
 }
 
 func initHandler(db *sql.DB, driver string) *v1.Handler {

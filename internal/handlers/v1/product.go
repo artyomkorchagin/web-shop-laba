@@ -2,12 +2,10 @@ package v1
 
 import (
 	"artyomkorchagin/web-shop/internal/types"
-	"fmt"
 	"net/http"
 	"path/filepath"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -40,7 +38,6 @@ func (h Handler) addProduct(c *gin.Context) {
 	}
 
 	uploadDir := "/uploads/products"
-	file.Filename = fmt.Sprintf("%v_%s", time.Now().Unix(), file.Filename)
 	fileName := filepath.Join(uploadDir, file.Filename)
 
 	if err := c.SaveUploadedFile(file, fileName); err != nil {

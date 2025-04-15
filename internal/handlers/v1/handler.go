@@ -44,7 +44,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	router.Static("/static", path.Join(thisdir, "/web/static/"))
 
-	router.Static("/uploads", path.Join(thisdir, "/uploads"))
+	router.Static("/uploads", path.Join(thisdir, "/uploads/"))
 
 	router.LoadHTMLGlob(path.Join(thisdir, "/web/static/html/*.html"))
 

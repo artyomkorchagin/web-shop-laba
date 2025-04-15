@@ -42,14 +42,15 @@ func (h Handler) addProduct(c *gin.Context) {
 	thisdir := filepath.Dir(exec)
 
 	uploadDir := "/uploads/products"
-	fileDst := filepath.Join(thisdir, uploadDir)
+	image := filepath.Join(uploadDir, file.Filename)
+	fileDst := filepath.Join(thisdir, image)
 
 	if err := c.SaveUploadedFile(file, fileDst); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save uploaded file"})
 		return
 	}
 
-	imageURL := filepath.Join(strings.ReplaceAll(fileDst, "\\", "/"), file.Filename)
+	imageURL := filepath.Join(strings.ReplaceAll(image, "\\", "/"))
 
 	productreq := &types.CreateProductRequest{
 		Name:          name,

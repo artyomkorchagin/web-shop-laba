@@ -6,6 +6,8 @@ import (
 	"artyomkorchagin/web-shop/internal/services/order"
 	"artyomkorchagin/web-shop/internal/services/product"
 	"artyomkorchagin/web-shop/internal/services/user"
+	"fmt"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -36,6 +38,11 @@ func NewHandler(services *AllServices) *Handler {
 
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
+	thisdir, err := os.Executable()
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(thisdir)
 
 	router.Static("/static", "../web/static/")
 

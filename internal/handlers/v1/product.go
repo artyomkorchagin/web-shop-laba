@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -42,7 +43,7 @@ func (h Handler) addProduct(c *gin.Context) {
 	thisdir := filepath.Dir(execdir)
 	uploadDir := filepath.Join(thisdir, "/uploads/products")
 
-	fileName := filepath.Join(uploadDir, file.Filename)
+	fileName := filepath.Join(uploadDir, (file.Filename + time.Now().String()))
 
 	if err := c.SaveUploadedFile(file, fileName); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save uploaded file"})

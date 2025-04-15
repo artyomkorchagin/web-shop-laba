@@ -37,7 +37,7 @@ func NewHandler(services *AllServices) *Handler {
 
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
-	thisdir, err := os.Executable()
+	thisdir, err := os.Getwd()
 	if err != nil {
 		panic(err)
 	}

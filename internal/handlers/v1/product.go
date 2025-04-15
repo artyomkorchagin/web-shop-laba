@@ -48,7 +48,7 @@ func (h Handler) addProduct(c *gin.Context) {
 		return
 	}
 
-	imageURL := strings.ReplaceAll(fileName[2:], "\\", "/")
+	imageURL := strings.ReplaceAll(fileName, "\\", "/")
 
 	productreq := &types.CreateProductRequest{
 		Name:          name,

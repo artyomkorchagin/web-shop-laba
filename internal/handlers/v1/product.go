@@ -3,6 +3,7 @@ package v1
 import (
 	"artyomkorchagin/web-shop/internal/types"
 	"net/http"
+	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -37,7 +38,9 @@ func (h Handler) addProduct(c *gin.Context) {
 		return
 	}
 
-	uploadDir := "../uploads/products"
+	execdir, _ := os.Executable()
+	thisdir := filepath.Dir(execdir)
+	uploadDir := filepath.Join(thisdir, "/uploads/products")
 
 	fileName := filepath.Join(uploadDir, file.Filename)
 

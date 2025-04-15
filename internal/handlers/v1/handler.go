@@ -38,10 +38,7 @@ func NewHandler(services *AllServices) *Handler {
 
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
-	thisdir, err := os.Getwd()
-	if err != nil {
-		panic(err)
-	}
+	thisdir, _ := os.Getwd()
 
 	router.Static("/static", path.Join(thisdir, "/web/static/"))
 

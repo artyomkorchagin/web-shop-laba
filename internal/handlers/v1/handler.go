@@ -37,6 +37,7 @@ func NewHandler(services *AllServices) *Handler {
 }
 
 func (h *Handler) InitRoutes() *gin.Engine {
+	gin.SetMode(gin.ReleaseMode)
 	router := gin.New()
 	exec, _ := os.Executable()
 	thisdir := path.Dir(exec)

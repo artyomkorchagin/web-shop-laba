@@ -3,6 +3,7 @@ package v1
 import (
 	"artyomkorchagin/web-shop/internal/types"
 	"net/http"
+	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -37,15 +38,18 @@ func (h Handler) addProduct(c *gin.Context) {
 		return
 	}
 
-	uploadDir := "\\uploads\\products"
-	fileName := filepath.Join(uploadDir, file.Filename)
+	exec, _ := os.Executable()
+	thisdir := filepath.Dir(exec)
 
-	if err := c.SaveUploadedFile(file, fileName); err != nil {
+	uploadDir := "/uploads/products"
+	fileDst := filepath.Join(thisdir, uploadDir)
+
+	if err := c.SaveUploadedFile(file, fileDst); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save uploaded file"})
 		return
 	}
 
-	imageURL := strings.ReplaceAll(fileName, "\\", "/")
+	imageURL := filepath.Join(strings.ReplaceAll(fileDst, "\\", "/"), file.Filename)
 
 	productreq := &types.CreateProductRequest{
 		Name:          name,

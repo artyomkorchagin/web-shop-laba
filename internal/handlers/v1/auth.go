@@ -46,11 +46,11 @@ func (h *Handler) signIn(c *gin.Context) {
 		return
 	}
 
-	c.SetCookie("token", token, 3600, "/", "localhost", false, true)
+	c.SetCookie("token", token, 3600, "/", "localhost", false, false)
 	c.Redirect(http.StatusSeeOther, "/")
 }
 
 func (h *Handler) signOut(c *gin.Context) {
-	c.SetCookie("token", "", -1, "/", "localhost", false, true)
+	c.SetCookie("token", "", -1, "/", "localhost", false, false)
 	c.Redirect(http.StatusSeeOther, "/")
 }

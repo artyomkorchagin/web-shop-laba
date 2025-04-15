@@ -2,10 +2,12 @@ package v1
 
 import (
 	"artyomkorchagin/web-shop/internal/types"
+	"fmt"
 	"net/http"
 	"path/filepath"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -37,16 +39,16 @@ func (h Handler) addProduct(c *gin.Context) {
 		return
 	}
 
-	uploadDir := "../uploads/products"
+	uploadDir := "/uploads/products"
 
-	fileName := filepath.Join(uploadDir, file.Filename)
+	fileName := filepath.Join(uploadDir, fmt.Sprintf("%v_%s", time.Now().Unix(), file.Filename))
 
 	if err := c.SaveUploadedFile(file, fileName); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save uploaded file"})
 		return
 	}
 
-	imageURL := strings.ReplaceAll(fileName[2:], "\\", "/")
+	imageURL := strings.ReplaceAll(fileName, "\\", "/")
 
 	productreq := &types.CreateProductRequest{
 		Name:          name,

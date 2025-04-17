@@ -70,6 +70,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		renderAuth.GET("/add-stuff", h.renderAddStuff)
 		renderAuth.GET("/cart", h.renderCart)
 		renderAuth.GET("/order", h.renderOrder)
+		renderAuth.GET("/order-history", h.getOrderHistory)
 	}
 	apiv1 := router.Group("/api/v1")
 	apiv1.Use(middleware.AuthMiddleware())

@@ -31,6 +31,22 @@ func (h *Handler) addOrder(c *gin.Context) {
 	email := c.Request.Context().Value("email").(string)
 	address := c.PostForm("address")
 
-	h.services.order.AddOrder(c, email, address)
+	if err := h.services.order.AddOrder(c, email, address); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
+	}
+	c.Redirect(http.StatusSeeOther, "/render-auth/order-history")
+
+}
+
+func (h *Handler) getOrderHistory(c *gin.Context) {
+	email := c.Request.Context().Value("email").(string)
+
+	orders, err := h.services.order.GetOrderHistory(c, email)
+	if err != nil {
+		c.AbortWithStatus(http.StatusInternalServerError)
+	}
+	c.HTML(http.StatusOK, "order_history.html", gin.H{
+		"Orders": orders,
+	})
 
 }

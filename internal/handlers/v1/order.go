@@ -39,6 +39,7 @@ func (h *Handler) addOrder(c *gin.Context) {
 }
 
 func (h *Handler) getOrderHistory(c *gin.Context) {
+	role := c.Request.Context().Value("role").(string)
 	email := c.Request.Context().Value("email").(string)
 
 	orders, err := h.services.order.GetOrderHistory(c, email)
@@ -47,6 +48,7 @@ func (h *Handler) getOrderHistory(c *gin.Context) {
 	}
 	c.HTML(http.StatusOK, "order_history.html", gin.H{
 		"Orders": orders,
+		"Role":   role,
 	})
 
 }

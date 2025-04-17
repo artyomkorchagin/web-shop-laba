@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js"></script>
+  <link rel="stylesheet" href="/static/css/chatstyles.css"  />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Online Shop</title>
+  <title>Магаzine</title>
   <style>
+    
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -141,5 +144,24 @@
       <div class="no-products">Нет товаров.</div>
     {{ end }}
   </main>
+  <div class="chat-container minimized">
+    <div class="chat-header">
+        <span>Чат-бот</span>
+        <button class="chat-toggle-btn">−</button>
+    </div>
+    <div class="chat-body" id="chat">
+    </div>
+    <div class="chat-footer">
+        <div class="chat-buttons" id="chatButtons"></div>
+        <div class="chat-input" id="chatInput">
+            <input type="text" id="inputField" name="inputField" placeholder="Введи данные...">
+            <button onclick="submitInput()">Отправить</button>
+            <button onclick="cancelAction()" class="cancel-btn">Отмена</button>
+        </div>
+    </div>
+  </div>
+  <button class="chat-open-btn"><i class="fas fa-comment"></i>Чат</button>
+  <script src="/static/js/chat.js"></script>
 </body>
+
 </html>

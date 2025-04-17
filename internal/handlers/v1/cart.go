@@ -47,5 +47,8 @@ func (h *Handler) addToCart(c *gin.Context) {
 		c.AbortWithStatus(http.StatusInternalServerError)
 	}
 
-	h.services.product.AddToCart(c, email, productID, amount)
+	err = h.services.product.AddToCart(c, email, productID, amount)
+	if err != nil {
+		c.AbortWithStatus(http.StatusInternalServerError)
+	}
 }

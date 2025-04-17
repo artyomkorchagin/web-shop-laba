@@ -71,6 +71,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		renderAuth.GET("/cart", h.renderCart)
 		renderAuth.GET("/order", h.renderOrder)
 		renderAuth.GET("/order-history", h.getOrderHistory)
+		renderAuth.GET("/products-analytics", h.getProductsAnalytics)
 	}
 	apiv1 := router.Group("/api/v1")
 	apiv1.Use(middleware.AuthMiddleware())
@@ -81,6 +82,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		apiv1.POST("/add-category", h.addCategory)
 		apiv1.POST("/add-order", h.addOrder)
 		apiv1.POST("/add-to-cart", h.addToCart)
+
 	}
 
 	return router

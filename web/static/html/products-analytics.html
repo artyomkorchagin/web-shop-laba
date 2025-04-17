@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Analytics</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f9f9f9;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background-color: #333;
+      color: #fff;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .header a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+    }
+    .header a:hover {
+      text-decoration: underline;
+    }
+    .product-analytics-container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .product-card {
+      display: flex;
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+    .product-image {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-right: 20px;
+    }
+    .product-details {
+      flex-grow: 1;
+    }
+    .product-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 0 0 10px 0;
+    }
+    .product-metric {
+      margin: 5px 0;
+      color: #555;
+    }
+    .product-metric strong {
+      color: #333;
+    }
+    .product-price {
+      font-size: 16px;
+      font-weight: bold;
+      color: #007bff;
+    }
+    .product-stock {
+      font-weight: bold;
+      color: #28a745;
+    }
+    .product-last-purchase {
+      font-style: italic;
+      color: #6c757d;
+    }
+    .no-products {
+      text-align: center;
+      font-size: 18px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>Анализ товаров</h1>
+    <div>
+      <a href="/">Вернуться</a>
+      <a href="/render-auth/profile">Профиль</a>
+    </div>
+  </header>
+
+  <main class="content">
+    <div class="product-analytics-container">
+      {{ if eq (len .Products) 0 }}
+        <p class="no-products">Нет товаров в магазине.</p>
+      {{ else }}
+        {{ range .Products }}
+          <div class="product-card">
+            <img src="{{ .ImageURL }}" alt="{{ .Name }}" class="product-image">
+            <div class="product-details">
+              <div class="product-title">{{ .Name }}</div>
+              <div class="product-description">{{ .Description }}</div>
+              <div class="product-metric"><strong>Views:</strong> {{ .ViewCount }}</div>
+              <div class="product-metric"><strong>Purchases:</strong> {{ .PurchaseCount }}</div>
+              <div class="product-metric"><strong>Last Purchase:</strong> <span class="product-last-purchase">{{ .LastPurchaseAt }}</span></div>
+              <div class="product-metric"><strong>Last View:</strong> <span class="product-last-purchase">{{ .LastViewAt }}</span></div>
+            </div>
+          </div>
+        {{ end }}
+      {{ end }}
+    </div>
+  </main>
+</body>
+</html>

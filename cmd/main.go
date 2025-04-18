@@ -1,6 +1,7 @@
 package main
 
 import (
+	"artyomkorchagin/web-shop/internal/app/logger"
 	v1 "artyomkorchagin/web-shop/internal/handlers/v1"
 	"artyomkorchagin/web-shop/internal/services/category"
 	"artyomkorchagin/web-shop/internal/services/order"
@@ -43,14 +44,14 @@ func main() {
 
 	defer db.Close()
 
-	handler := initHandler(db, cfg.Driver)
+	handler := initHandler(db, cfg.Driver, logger.New())
 
 	r := handler.InitRoutes()
 
 	r.Run(":80")
 }
 
-func initHandler(db *sql.DB, driver string) *v1.Handler {
+func initHandler(db *sql.DB, driver string, logger *log.Logger) *v1.Handler {
 	var (
 		userRepo     user.ReadWriter
 		productRepo  product.ReadWriter
@@ -82,5 +83,5 @@ func initHandler(db *sql.DB, driver string) *v1.Handler {
 	categoryService := category.NewService(categoryRepo)
 	orderService := order.NewService(orderRepo)
 	svc := v1.NewAllServices(userService, productService, categoryService, orderService)
-	return v1.NewHandler(svc)
+	return v1.NewHandler(svc, logger)
 }

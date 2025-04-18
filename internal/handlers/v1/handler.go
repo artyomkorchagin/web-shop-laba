@@ -6,6 +6,7 @@ import (
 	"artyomkorchagin/web-shop/internal/services/order"
 	"artyomkorchagin/web-shop/internal/services/product"
 	"artyomkorchagin/web-shop/internal/services/user"
+	"log"
 	"os"
 	"path"
 
@@ -21,6 +22,7 @@ type AllServices struct {
 
 type Handler struct {
 	services *AllServices
+	logger   *log.Logger
 }
 
 func NewAllServices(u *user.Service, p *product.Service, c *category.Service, o *order.Service) *AllServices {
@@ -32,8 +34,11 @@ func NewAllServices(u *user.Service, p *product.Service, c *category.Service, o 
 	}
 }
 
-func NewHandler(services *AllServices) *Handler {
-	return &Handler{services: services}
+func NewHandler(services *AllServices, logger *log.Logger) *Handler {
+	return &Handler{
+		services: services,
+		logger:   logger,
+	}
 }
 
 func (h *Handler) InitRoutes() *gin.Engine {
@@ -47,7 +52,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	router.Static("/uploads", path.Join(thisdir, "/uploads/"))
 
 	router.LoadHTMLGlob(path.Join(thisdir, "/web/static/html/*.html"))
-
+	router.Use(middleware.LoggerMiddleware(h.logger))
 	router.Use(middleware.PassUserData())
 
 	router.GET("/ws", h.handleWebSocket)

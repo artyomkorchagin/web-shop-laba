@@ -45,6 +45,8 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	router.Use(middleware.PassUserData())
 
+	router.GET("/ws", h.handleWebSocket)
+
 	main := router.Group("/")
 	{
 		main.GET("/", h.renderMain)

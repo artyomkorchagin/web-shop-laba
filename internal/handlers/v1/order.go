@@ -47,8 +47,9 @@ func (h *Handler) getOrderHistory(c *gin.Context) {
 		c.AbortWithStatus(http.StatusInternalServerError)
 	}
 	c.HTML(http.StatusOK, "order_history.html", gin.H{
-		"Orders": orders,
-		"Role":   role,
+		"Orders":   orders,
+		"LoggedIn": role != "",
+		"Role":     role,
 	})
 
 }

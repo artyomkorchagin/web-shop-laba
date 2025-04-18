@@ -29,6 +29,7 @@ func (h *Handler) renderMain(c *gin.Context) {
 		"LoggedIn": role != "",
 		"Role":     role,
 		"Products": products,
+		"Domain":   "localhost:3000",
 	})
 }
 

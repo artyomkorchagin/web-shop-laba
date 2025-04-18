@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"fmt"
 	"log"
 	"time"
 
@@ -20,7 +21,7 @@ func LoggerMiddleware(logger *log.Logger) gin.HandlerFunc {
 		path := c.Request.URL.Path
 		statusCode := c.Writer.Status()
 
-		logger.Printf(
+		msg := fmt.Sprintf(
 			"[GIN] %s | %3d | %13v | %15s | %-7s %s",
 			time.Now().Format("2006/01/02 - 15:04:05"),
 			statusCode,
@@ -29,5 +30,8 @@ func LoggerMiddleware(logger *log.Logger) gin.HandlerFunc {
 			method,
 			path,
 		)
+
+		log.Println(msg)
+		logger.Println(msg)
 	}
 }

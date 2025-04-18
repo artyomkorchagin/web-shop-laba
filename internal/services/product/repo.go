@@ -9,6 +9,8 @@ type Reader interface {
 	GetCartByUserEmail(ctx context.Context, email string) ([]types.Product, error)
 	GetAllProducts(ctx context.Context) ([]types.Product, error)
 	GetProductById(ctx context.Context, id int) (types.Product, error)
+	GetProductsAnalytics(ctx context.Context) ([]types.Product, error)
+	GetSimilarProduct(ctx context.Context, userInput string) (types.Product, error)
 }
 
 type Writer interface {

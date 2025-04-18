@@ -7,9 +7,10 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 20px;
+      margin: 0;
       background-color: #f9f9f9;
     }
+
     .header {
       display: flex;
       justify-content: space-between;
@@ -109,6 +110,9 @@
               <h3>Количество: {{ .StockQuantity }} шт</h3>
               <p>{{ .Sum }} руб</p>
             </div>
+            <button hx-post="/api/v1/delete-from-cart" hx-vals="{'product_id': '{{ .ID }}'}">
+              Удалить из корзины
+          </button>
           </div>
         {{ end }}
       </div>

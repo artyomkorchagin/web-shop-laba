@@ -21,7 +21,7 @@ func (r *Repository) GetProductById(ctx context.Context, id int) (types.Product,
 		WHERE p.product_id = $1
 	`
 	if err := r.db.
-		QueryRow(query, id).
+		QueryRowContext(ctx, query, id).
 		Scan(&product.Name, &product.Price, &product.Description, &product.StockQuantity, &product.CategoryString, &product.CreatedAt, &product.ImageURL); err != nil {
 		return product, err
 	}

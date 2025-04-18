@@ -70,3 +70,17 @@ func (h Handler) addProduct(c *gin.Context) {
 
 	c.Redirect(http.StatusSeeOther, "/render-auth/add-stuff")
 }
+
+func (h *Handler) getProductsAnalytics(c *gin.Context) {
+	role := c.Request.Context().Value("role").(string)
+	products, err := h.services.product.GetProductsAnalytics(c)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get products from db"})
+		return
+	}
+	c.HTML(http.StatusOK, "products-analytics.html", gin.H{
+		"Products": products,
+		"Role":     role,
+	})
+
+}

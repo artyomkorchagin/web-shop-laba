@@ -14,6 +14,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"os"
 
 	"artyomkorchagin/web-shop/internal/config"
 
@@ -37,6 +38,7 @@ func main() {
 		log.Fatal(err)
 	}
 
+	log.Println(os.Getenv("RAILWAY_PUBLIC_DOMAIN"))
 	log.Println("Successfully connected to the database!")
 
 	defer db.Close()

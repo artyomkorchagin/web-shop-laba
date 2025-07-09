@@ -8,10 +8,8 @@ import (
 	"github.com/golang-jwt/jwt"
 )
 
-// AuthMiddleware is the middleware function to optionally extract email and role from a JWT token.
 func PassUserData() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		// 1. Extract the token from the cookie (optional)
 		tokenString, err := c.Cookie(tokenName)
 		if err != nil {
 			ctx := c.Request.Context()

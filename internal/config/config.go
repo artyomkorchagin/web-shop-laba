@@ -53,7 +53,6 @@ func Load(configPath string) (*Config, error) {
 }
 
 func (c *Config) GetDSN() string {
-
 	switch c.DBMS {
 	case "psql":
 		return fmt.Sprintf("host=%s port=%d dbname=%s user=%s password=%s sslmode=%s",
